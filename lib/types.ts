@@ -21,7 +21,7 @@ export type ClothingItemState =
   | "UNKNOWN"
   | "ARCHIVED";
 
-  export const categories: ClothingCategory[] = [
+export const categories: ClothingCategory[] = [
   "tops",
   "bottoms",
   "outerwear",

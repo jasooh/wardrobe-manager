@@ -16,8 +16,10 @@ import { WardrobeHeader } from "@/components/wardrobe-header";
 import { WardrobeStats } from "@/components/wardrobe-stats";
 import { WardrobeEmptyState } from "@/components/wardrobe-empty-state";
 import { WardrobeItemsGrid } from "@/components/wardrobe-items-grid";
+import { useWardrobe } from "@/context/wardrobe-context";
 
 export default function Page() {
+  const { searchQuery, categoryFilter } = useWardrobe();
   const [items, setItems] = React.useState<ClothingItem[]>([]);
   const [isDialogOpen, setIsDialogOpen] = React.useState(false);
   const [editingItem, setEditingItem] = React.useState<ClothingItem | null>(
@@ -81,21 +83,32 @@ export default function Page() {
     setItems((prevItems) => prevItems.filter((item) => item.id !== id));
   };
 
-  // For now, show all items (SearchBar manages its own state)
-  const filteredItems = items;
+  // Filter items based on search query and category
+  const filteredItems = items.filter((item) => {
+    const matchesSearch =
+      searchQuery === "" ||
+      item.name.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesCategory =
+      categoryFilter === "all" || item.category === categoryFilter;
+
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <main className="min-h-screen bg-background">
       <div className="container mx-auto px-8 py-20 max-w-6xl">
+        {/* Header */}
         <WardrobeHeader onAddItem={handleAddItem} />
 
+        {/* Search bar */}
         <SearchBar />
-
         <WardrobeStats
           filteredCount={filteredItems.length}
           totalCount={items.length}
         />
 
+        {/* Clothing items grid */}
         {filteredItems.length === 0 ? (
           <WardrobeEmptyState
             hasItems={items.length > 0}

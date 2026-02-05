@@ -27,7 +27,7 @@ export function WardrobeEmptyState({
       {!hasItems && (
         <Button onClick={onAddItem} variant="outline">
           <PlusIcon data-icon="inline-start" />
-          Add Your First Item
+          Add your first item
         </Button>
       )}
     </div>
