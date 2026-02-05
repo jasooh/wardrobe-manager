@@ -188,7 +188,8 @@ export function ItemFormDialog({
                       <SelectContent>
                         {categories.map((category) => (
                           <SelectItem key={category} value={category}>
-                            {category.charAt(0).toUpperCase() + category.slice(1)}
+                            {category.charAt(0).toUpperCase() +
+                              category.slice(1)}
                           </SelectItem>
                         ))}
                       </SelectContent>
