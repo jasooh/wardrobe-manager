@@ -5,16 +5,6 @@
  * Defines the structure of clothing items and related data types.
  */
 
-export const categories: ClothingCategory[] = [
-  "tops",
-  "bottoms",
-  "outerwear",
-  "shoes",
-  "accessories",
-  "underwear",
-  "other",
-];
-
 export type ClothingCategory =
   | "tops"
   | "bottoms"
@@ -30,6 +20,16 @@ export type ClothingItemState =
   | "CHECKED_OUT"
   | "UNKNOWN"
   | "ARCHIVED";
+
+  export const categories: ClothingCategory[] = [
+  "tops",
+  "bottoms",
+  "outerwear",
+  "shoes",
+  "accessories",
+  "underwear",
+  "other",
+];
 
 export interface ClothingItem {
   id: string;

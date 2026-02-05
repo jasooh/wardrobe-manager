@@ -6,7 +6,7 @@
  */
 
 import {useState} from "react";
-import { Input } from "@base-ui/react/input"
+import { Input } from "@/components/ui/input";
 import { ClothingCategory } from "@/lib/types";
 import { SearchIcon } from "lucide-react";
 import {
@@ -16,19 +16,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { categories } from "@/lib/types";
 
 export function SearchBar() {
-    const categories: (ClothingCategory | "all")[] = [
-        "all",
-        "tops",
-        "bottoms",
-        "outerwear",
-        "shoes",
-        "accessories",
-        "underwear",
-        "other",
-    ];
-    
     const [searchQuery, setSearchQuery] = useState("");
     const [categoryFilter, setCategoryFilter] = useState<ClothingCategory | "all">("all");
 
@@ -53,11 +43,10 @@ export function SearchBar() {
                 <SelectValue placeholder="All Categories" />
               </SelectTrigger>
               <SelectContent>
+                <SelectItem value="all">All Categories</SelectItem>
                 {categories.map((category) => (
                   <SelectItem key={category} value={category}>
-                    {category === "all"
-                      ? "All Categories"
-                      : category.charAt(0).toUpperCase() + category.slice(1)}
+                    {category.charAt(0).toUpperCase() + category.slice(1)}
                   </SelectItem>
                 ))}
               </SelectContent>
