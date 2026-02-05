@@ -15,7 +15,7 @@ export function WardrobeStats({
   totalCount,
 }: WardrobeStatsProps) {
   return (
-    <div className="mb-6 text-sm text-muted-foreground">
+    <div className="mt-2 mb-6 text-xs text-muted-foreground">
       Showing {filteredCount} of {totalCount} items
     </div>
   );
