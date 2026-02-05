@@ -26,7 +26,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { ClothingItem, ClothingCategory } from "@/lib/types";
+import { ClothingItem, ClothingCategory, categories } from "@/lib/types";
 
 interface ItemFormDialogProps {
   open: boolean;
@@ -36,16 +36,6 @@ interface ItemFormDialogProps {
     item: Omit<ClothingItem, "id" | "createdAt" | "state" | "wornAt">
   ) => void;
 }
-
-const categories: ClothingCategory[] = [
-  "tops",
-  "bottoms",
-  "outerwear",
-  "shoes",
-  "accessories",
-  "underwear",
-  "other",
-];
 
 export function ItemFormDialog({
   open,

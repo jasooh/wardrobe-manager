@@ -5,6 +5,16 @@
  * Defines the structure of clothing items and related data types.
  */
 
+export const categories: ClothingCategory[] = [
+  "tops",
+  "bottoms",
+  "outerwear",
+  "shoes",
+  "accessories",
+  "underwear",
+  "other",
+];
+
 export type ClothingCategory =
   | "tops"
   | "bottoms"
