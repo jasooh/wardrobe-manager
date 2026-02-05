@@ -1,6 +1,6 @@
 /**
  * dialog.tsx
- * 
+ *
  * Dialog component for displaying modal dialogs using Radix UI.
  * Used for forms and content that needs to be displayed in an overlay.
  */
@@ -21,17 +21,13 @@ function Dialog({
 function DialogTrigger({
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Trigger>) {
-  return (
-    <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />
-  );
+  return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />;
 }
 
 function DialogPortal({
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Portal>) {
-  return (
-    <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />
-  );
+  return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />;
 }
 
 function DialogOverlay({
@@ -74,10 +70,7 @@ function DialogContent({
   );
 }
 
-function DialogHeader({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="dialog-header"
@@ -90,10 +83,7 @@ function DialogHeader({
   );
 }
 
-function DialogFooter({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+function DialogFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="dialog-footer"
@@ -129,10 +119,7 @@ function DialogDescription({
   return (
     <DialogPrimitive.Description
       data-slot="dialog-description"
-      className={cn(
-        "text-muted-foreground text-xs/relaxed",
-        className
-      )}
+      className={cn("text-muted-foreground text-xs/relaxed", className)}
       {...props}
     />
   );

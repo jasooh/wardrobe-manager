@@ -1,6 +1,6 @@
 /**
  * page.tsx
- * 
+ *
  * Main dashboard page for the wardrobe manager application.
  * Displays all clothing items in a grid layout with filtering and search capabilities.
  * Provides functionality to add, edit, and delete clothing items.
@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/select";
 import { WardrobeItemCard } from "@/components/wardrobe-item-card";
 import { ItemFormDialog } from "@/components/item-form-dialog";
-import { PlusIcon, SearchIcon } from "lucide-react";
+import { PlusIcon, SearchIcon, Shirt } from "lucide-react";
 import { ClothingItem, ClothingCategory, ClothingItemState } from "@/lib/types";
 
 export default function Page() {
@@ -33,23 +33,6 @@ export default function Page() {
   const [categoryFilter, setCategoryFilter] = React.useState<
     ClothingCategory | "all"
   >("all");
-
-  // Load items from localStorage on mount
-  React.useEffect(() => {
-    const savedItems = localStorage.getItem("wardrobe-items");
-    if (savedItems) {
-      try {
-        setItems(JSON.parse(savedItems));
-      } catch (error) {
-        console.error("Failed to load items from localStorage:", error);
-      }
-    }
-  }, []);
-
-  // Save items to localStorage whenever items change
-  React.useEffect(() => {
-    localStorage.setItem("wardrobe-items", JSON.stringify(items));
-  }, [items]);
 
   const handleAddItem = () => {
     setEditingItem(null);
@@ -92,18 +75,14 @@ export default function Page() {
 
   const handleStateChange = (id: string, state: ClothingItemState) => {
     setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, state } : item
-      )
+      prevItems.map((item) => (item.id === id ? { ...item, state } : item))
     );
   };
 
   const handleMarkWorn = (id: string) => {
     setItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === id
-          ? { ...item, wornAt: new Date().toISOString() }
-          : item
+        item.id === id ? { ...item, wornAt: new Date().toISOString() } : item
       )
     );
   };
@@ -137,15 +116,20 @@ export default function Page() {
 
   return (
     <main className="min-h-screen bg-background">
-      <div className="container mx-auto px-8 py-8 max-w-6xl">
+      <div className="container mx-auto px-8 py-20 max-w-6xl">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
-            <div>
-              <h1 className="text-2xl font-semibold mb-2">Wardrobe Manager</h1>
-              <p className="text-sm text-muted-foreground">
-                Manage your clothing collection
-              </p>
+            <div className="flex flex-row items-center gap-6">
+              <Shirt className="size-10" />
+              <div>
+                <h1 className="text-2xl font-semibold mb-2">
+                  Wardrobe Manager
+                </h1>
+                <p className="text-sm text-muted-foreground">
+                  Manage your clothing collection
+                </p>
+              </div>
             </div>
             <Button onClick={handleAddItem}>
               <PlusIcon data-icon="inline-start" />

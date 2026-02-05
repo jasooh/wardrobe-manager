@@ -1,6 +1,6 @@
 /**
  * item-form-dialog.tsx
- * 
+ *
  * Dialog component for adding and editing clothing items.
  * Contains a form with all fields for clothing item details.
  */
@@ -32,7 +32,9 @@ interface ItemFormDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   item?: ClothingItem | null;
-  onSave: (item: Omit<ClothingItem, "id" | "createdAt" | "state" | "wornAt">) => void;
+  onSave: (
+    item: Omit<ClothingItem, "id" | "createdAt" | "state" | "wornAt">
+  ) => void;
 }
 
 const categories: ClothingCategory[] = [

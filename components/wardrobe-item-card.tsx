@@ -1,6 +1,6 @@
 /**
  * wardrobe-item-card.tsx
- * 
+ *
  * Card component for displaying individual clothing items in the wardrobe.
  * Shows item details and provides actions for editing and deleting items.
  */
@@ -40,7 +40,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { MoreVerticalIcon, EditIcon, TrashIcon, CalendarIcon } from "lucide-react";
+import {
+  MoreVerticalIcon,
+  EditIcon,
+  TrashIcon,
+  CalendarIcon,
+} from "lucide-react";
 import { ClothingItem, ClothingItemState } from "@/lib/types";
 
 interface WardrobeItemCardProps {
@@ -145,16 +150,16 @@ export function WardrobeItemCard({
             {item.wornAt && (
               <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                 <CalendarIcon className="size-3" />
-                <span>Last worn: {new Date(item.wornAt).toLocaleDateString()}</span>
+                <span>
+                  Last worn: {new Date(item.wornAt).toLocaleDateString()}
+                </span>
               </div>
             )}
           </div>
         </CardContent>
         <CardFooter>
           <div className="flex items-center justify-between w-full text-xs text-muted-foreground">
-            <span>
-              Added: {new Date(item.createdAt).toLocaleDateString()}
-            </span>
+            <span>Added: {new Date(item.createdAt).toLocaleDateString()}</span>
           </div>
         </CardFooter>
       </Card>
@@ -170,10 +175,7 @@ export function WardrobeItemCard({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              variant="destructive"
-              onClick={handleDelete}
-            >
+            <AlertDialogAction variant="destructive" onClick={handleDelete}>
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>

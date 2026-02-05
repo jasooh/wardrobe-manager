@@ -1,6 +1,6 @@
 /**
  * types.ts
- * 
+ *
  * Type definitions for the wardrobe manager application.
  * Defines the structure of clothing items and related data types.
  */
