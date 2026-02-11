@@ -177,20 +177,20 @@ export function ItemFormDialog({
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent size="lg">
+            <DialogContent size="lg" className="max-w-[95vw] sm:max-w-lg md:max-w-2xl">
                 <DialogHeader>
-                    <DialogTitle className="text-lg">
+                    <DialogTitle className="text-base sm:text-lg">
                         {item ? "Edit Item" : "Add New Item"}
                     </DialogTitle>
-                    <DialogDescription>
+                    <DialogDescription className="text-xs sm:text-sm">
                         {item
                             ? "Update the details of your clothing item."
                             : "Add a new item to your wardrobe."}
                     </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleSubmit}>
-                    <div className="py-4">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="py-2 sm:py-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                             {/* Left Column: Name & Category */}
                             <div className="space-y-4">
                                 {/* Name Field */}
@@ -252,7 +252,7 @@ export function ItemFormDialog({
                                 <FieldGroup>
                                     {imagePreview ? (
                                         <div className="relative group">
-                                            <div className="relative w-full h-48 rounded-none border border-border overflow-hidden bg-muted">
+                                            <div className="relative w-full h-40 sm:h-48 rounded-none border border-border overflow-hidden bg-muted">
                                                 <Image
                                                     src={imagePreview}
                                                     alt="Preview"
@@ -275,7 +275,7 @@ export function ItemFormDialog({
                                                 onClick={() =>
                                                     fileInputRef.current?.click()
                                                 }
-                                                className="mt-2 w-full"
+                                                className="mt-2 w-full text-xs sm:text-sm"
                                             >
                                                 <UploadIcon data-icon="inline-start" />
                                                 Change Image
@@ -285,21 +285,21 @@ export function ItemFormDialog({
                                         <div
                                             onDrop={handleDrop}
                                             onDragOver={handleDragOver}
-                                            className="relative w-full h-48 rounded-none border-2 border-dashed border-border bg-muted/50 hover:bg-muted transition-colors cursor-pointer group"
+                                            className="relative w-full h-40 sm:h-48 rounded-none border-2 border-dashed border-border bg-muted/50 hover:bg-muted transition-colors cursor-pointer group"
                                             onClick={() =>
                                                 fileInputRef.current?.click()
                                             }
                                         >
-                                            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-                                                <div className="p-3 rounded-none bg-background/50 border border-border group-hover:bg-background transition-colors">
-                                                    <ImageIcon className="size-8 text-muted-foreground" />
+                                            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 sm:gap-3 px-4">
+                                                <div className="p-2 sm:p-3 rounded-none bg-background/50 border border-border group-hover:bg-background transition-colors">
+                                                    <ImageIcon className="size-6 sm:size-8 text-muted-foreground" />
                                                 </div>
-                                                <div className="text-center px-4">
-                                                    <p className="text-sm font-medium text-foreground mb-1">
+                                                <div className="text-center">
+                                                    <p className="text-xs sm:text-sm font-medium text-foreground mb-1">
                                                         Click to upload or drag
                                                         and drop
                                                     </p>
-                                                    <p className="text-xs text-muted-foreground">
+                                                    <p className="text-[10px] sm:text-xs text-muted-foreground">
                                                         PNG, JPG, GIF up to 5MB
                                                     </p>
                                                 </div>
@@ -317,15 +317,16 @@ export function ItemFormDialog({
                             </Field>
                         </div>
                     </div>
-                    <DialogFooter className="gap-2">
+                    <DialogFooter className="gap-2 flex-col sm:flex-row">
                         <Button
                             type="button"
                             variant="outline"
                             onClick={() => onOpenChange(false)}
+                            className="w-full sm:w-auto"
                         >
                             Cancel
                         </Button>
-                        <Button type="submit">
+                        <Button type="submit" className="w-full sm:w-auto">
                             {item ? "Update" : "Add"} Item
                         </Button>
                     </DialogFooter>

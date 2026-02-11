@@ -18,14 +18,14 @@ export function WardrobeEmptyState({
     onAddItem,
 }: WardrobeEmptyStateProps) {
     return (
-        <div className="text-center py-12">
-            <p className="text-muted-foreground mb-4">
+        <div className="text-center py-8 sm:py-12 px-4">
+            <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6">
                 {hasItems
                     ? "No items match your search criteria."
                     : "No items in your wardrobe yet. Add your first item!"}
             </p>
             {!hasItems && (
-                <Button onClick={onAddItem} variant="outline">
+                <Button onClick={onAddItem} variant="outline" className="w-full sm:w-auto">
                     <PlusIcon data-icon="inline-start" />
                     Add your first item
                 </Button>

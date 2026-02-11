@@ -23,14 +23,14 @@ export function SearchBar() {
         useWardrobe();
 
     return (
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-4 sm:mb-6">
             <div className="relative flex-1">
-                <SearchIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                <SearchIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
                 <Input
                     placeholder="Search items..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-8"
+                    className="pl-8 text-sm sm:text-base"
                 />
             </div>
             <Select
@@ -39,7 +39,7 @@ export function SearchBar() {
                     setCategoryFilter(value as ClothingCategory | "all")
                 }
             >
-                <SelectTrigger className="w-full sm:w-[180px]">
+                <SelectTrigger className="w-full sm:w-[180px] text-sm sm:text-base">
                     <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
                 <SelectContent>

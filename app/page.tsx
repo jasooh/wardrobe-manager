@@ -259,9 +259,9 @@ export default function Page() {
 
     return (
         <main className="min-h-screen bg-background">
-            <div className="container mx-auto px-8 py-20 max-w-6xl">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-20 max-w-6xl">
                 {/* Signout button */}
-                <div className="flex justify-end mb-4">
+                <div className="flex justify-end mb-4 sm:mb-6">
                     <SignoutButton />
                 </div>
 

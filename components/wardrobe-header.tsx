@@ -14,20 +14,20 @@ interface WardrobeHeaderProps {
 
 export function WardrobeHeader({ onAddItem }: WardrobeHeaderProps) {
     return (
-        <div className="mb-8">
-            <div className="flex items-center justify-between mb-6">
-                <div className="flex flex-row items-center gap-6">
-                    <Shirt className="size-10" />
+        <div className="mb-6 sm:mb-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-6">
+                <div className="flex flex-row items-center gap-3 sm:gap-6">
+                    <Shirt className="size-8 sm:size-10 flex-shrink-0" />
                     <div>
-                        <h1 className="text-2xl font-semibold mb-2">
+                        <h1 className="text-xl sm:text-2xl font-semibold mb-1 sm:mb-2">
                             Wardrobe Manager
                         </h1>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-xs sm:text-sm text-muted-foreground">
                             Manage your clothing collection
                         </p>
                     </div>
                 </div>
-                <Button onClick={onAddItem}>
+                <Button onClick={onAddItem} className="w-full sm:w-auto">
                     <PlusIcon data-icon="inline-start" />
                     Add Item
                 </Button>
