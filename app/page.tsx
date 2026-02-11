@@ -63,7 +63,7 @@ export default function Page() {
     };
 
     const handleSaveItem = (
-        itemData: Omit<ClothingItem, "id" | "createdAt" | "state" | "wornAt">
+        itemData: Omit<ClothingItem, "id" | "created_at" | "state" | "worn_at" | "user_id" | "updated_at">
     ) => {
         if (editingItem) {
             // Update existing item
@@ -83,7 +83,10 @@ export default function Page() {
                 ...itemData,
                 id: crypto.randomUUID(),
                 state: "UNKNOWN",
-                createdAt: new Date().toISOString(),
+                created_at: new Date().toISOString(),
+                worn_at: null,
+                user_id: user?.id || "",
+                updated_at: null,
             };
             setItems((prevItems) => [...prevItems, newItem]);
         }
@@ -103,7 +106,7 @@ export default function Page() {
         setItems((prevItems) =>
             prevItems.map((item) =>
                 item.id === id
-                    ? { ...item, wornAt: new Date().toISOString() }
+                    ? { ...item, worn_at: new Date().toISOString() }
                     : item
             )
         );

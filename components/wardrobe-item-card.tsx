@@ -115,10 +115,10 @@ export function WardrobeItemCard({
                     </div>
                 </CardHeader>
                 <CardContent>
-                    {item.image && (
+                    {item.image_url && (
                         <div className="mb-3 rounded-none overflow-hidden bg-muted aspect-square">
                             <img
-                                src={item.image}
+                                src={item.image_url}
                                 alt={item.name}
                                 className="w-full h-full object-cover"
                                 onError={(e) => {
@@ -157,12 +157,12 @@ export function WardrobeItemCard({
                                 </SelectContent>
                             </Select>
                         </div>
-                        {item.wornAt && (
+                        {item.worn_at && (
                             <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                                 <CalendarIcon className="size-3" />
                                 <span>
                                     Last worn:{" "}
-                                    {new Date(item.wornAt).toLocaleDateString()}
+                                    {new Date(item.worn_at).toLocaleDateString()}
                                 </span>
                             </div>
                         )}
@@ -172,7 +172,7 @@ export function WardrobeItemCard({
                     <div className="flex items-center justify-between w-full text-xs text-muted-foreground">
                         <span>
                             Added:{" "}
-                            {new Date(item.createdAt).toLocaleDateString()}
+                            {new Date(item.created_at || "").toLocaleDateString()}
                         </span>
                     </div>
                 </CardFooter>

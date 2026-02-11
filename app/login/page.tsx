@@ -39,12 +39,12 @@ export default function LoginPage() {
     return (
         <main className="min-h-screen flex items-center justify-center bg-background">
             <div className="w-full max-w-md px-4">
-                <div className="mb-8 text-center">
+                <div className="mb-8">
                     <h1 className="text-2xl font-semibold mb-2">
-                        Welcome Back!
+                        WardrobeOS
                     </h1>
                     <p className="text-sm text-muted-foreground">
-                        Sign in to access your wardrobe
+                        Your wardrobe digitalized.
                     </p>
                 </div>
                 <LoginForm />

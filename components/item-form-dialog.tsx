@@ -35,7 +35,7 @@ interface ItemFormDialogProps {
     onOpenChange: (open: boolean) => void;
     item?: ClothingItem | null;
     onSave: (
-        item: Omit<ClothingItem, "id" | "createdAt" | "state" | "wornAt">
+        item: Omit<ClothingItem, "id" | "created_at" | "state" | "worn_at" | "user_id" | "updated_at">
     ) => void;
 }
 
@@ -48,7 +48,7 @@ export function ItemFormDialog({
     const [formData, setFormData] = React.useState({
         name: "",
         category: "tops" as ClothingCategory,
-        image: "",
+        image_url: "",
     });
     const [imagePreview, setImagePreview] = React.useState<string | null>(null);
     const fileInputRef = React.useRef<HTMLInputElement>(null);
@@ -58,14 +58,14 @@ export function ItemFormDialog({
             setFormData({
                 name: item.name || "",
                 category: item.category || "tops",
-                image: item.image || "",
+                image_url: item.image_url || "",
             });
-            setImagePreview(item.image || null);
+            setImagePreview(item.image_url || null);
         } else {
             setFormData({
                 name: "",
                 category: "tops",
-                image: "",
+                image_url: "",
             });
             setImagePreview(null);
         }
@@ -89,7 +89,7 @@ export function ItemFormDialog({
             const reader = new FileReader();
             reader.onloadend = () => {
                 const base64String = reader.result as string;
-                setFormData({ ...formData, image: base64String });
+                setFormData({ ...formData, image_url: base64String });
                 setImagePreview(base64String);
             };
             reader.readAsDataURL(file);
@@ -97,7 +97,7 @@ export function ItemFormDialog({
     };
 
     const handleRemoveImage = () => {
-        setFormData({ ...formData, image: "" });
+        setFormData({ ...formData, image_url: "" });
         setImagePreview(null);
         if (fileInputRef.current) {
             fileInputRef.current.value = "";
@@ -115,7 +115,7 @@ export function ItemFormDialog({
             const reader = new FileReader();
             reader.onloadend = () => {
                 const base64String = reader.result as string;
-                setFormData({ ...formData, image: base64String });
+                setFormData({ ...formData, image_url: base64String });
                 setImagePreview(base64String);
             };
             reader.readAsDataURL(file);
@@ -131,7 +131,7 @@ export function ItemFormDialog({
         onSave({
             name: formData.name,
             category: formData.category,
-            image: formData.image || undefined,
+            image_url: formData.image_url || null,
         });
         onOpenChange(false);
     };

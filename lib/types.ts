@@ -35,8 +35,10 @@ export interface ClothingItem {
     id: string;
     name: string;
     category: ClothingCategory;
-    image?: string;
+    image_url: string | null;
     state: ClothingItemState;
-    createdAt: string;
-    wornAt?: string;
+    created_at: string | null;
+    worn_at: string | null;
+    user_id: string;
+    updated_at: string | null;
 }
