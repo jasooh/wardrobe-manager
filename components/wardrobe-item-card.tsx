@@ -174,7 +174,13 @@ export function WardrobeItemCard({
                                     Last worn:{" "}
                                     {new Date(
                                         item.worn_at
-                                    ).toLocaleDateString()}
+                                    ).toLocaleString(undefined, {
+                                        year: 'numeric',
+                                        month: 'short',
+                                        day: 'numeric',
+                                        hour: 'numeric',
+                                        minute: '2-digit',
+                                    })}
                                 </span>
                             </div>
                         )}
