@@ -10,7 +10,7 @@ export async function createClient() {
 
     return createServerClient<Database>(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
         {
             // This object tells Supabase how to read/write cookies in server environment
             // Browser uses `document.cookie` to read/write cookies, so we need to mimic that here!

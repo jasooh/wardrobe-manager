@@ -17,6 +17,10 @@ import { WardrobeStats } from "@/components/wardrobe-stats";
 import { WardrobeEmptyState } from "@/components/wardrobe-empty-state";
 import { WardrobeItemsGrid } from "@/components/wardrobe-items-grid";
 import { useWardrobe } from "@/context/wardrobe-context";
+import { useAuth } from "@/context/auth-context";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function Page() {
     const { searchQuery, categoryFilter } = useWardrobe();
@@ -25,6 +29,27 @@ export default function Page() {
     const [editingItem, setEditingItem] = React.useState<ClothingItem | null>(
         null
     );
+    const { user, loading } = useAuth();
+    const router = useRouter();
+
+    // Redirect to login page if user is not logged in
+    useEffect(() => {
+        if (!loading && !user) {
+            router.push('/login');
+        }
+    }, [user, loading, router]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-background">
+                <Spinner size="lg" />
+            </div>
+        );
+    }
+
+    if (!user) {
+        return null;
+    }
 
     const handleAddItem = () => {
         setEditingItem(null);

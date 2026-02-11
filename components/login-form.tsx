@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { useRouter } from "next/navigation";
 
 export function LoginForm() {
     const [email, setEmail] = useState("");
@@ -12,6 +13,8 @@ export function LoginForm() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const supabase = createClient();
+    const router = useRouter();
+
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault(); // prevent page reload
@@ -25,8 +28,11 @@ export function LoginForm() {
 
         if (error) {
             setError(error.message);
+            setLoading(false);
+        } else {
+            router.push('/');
         }
-        setLoading(false);
+        
     };
 
     return (
