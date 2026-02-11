@@ -15,7 +15,7 @@ export async function uploadImage(
     // Create file path: userId/itemId/image.jpg
     const fileExt = file.name.split(".").pop();
     const fileName = `${userId}/${itemId}/image.${fileExt}`;
-    const filePath = `images/${fileName}`;
+    const filePath = fileName;
 
     // Upload file
     const { error: uploadError } = await supabase.storage
@@ -48,8 +48,8 @@ export async function deleteImage(imageUrl: string): Promise<void> {
     const urlParts = imageUrl.split('/images/')
     if (urlParts.length !== 2) return
 
-    const filePath = `images/${urlParts[1]}`  // this is the file path we need to delete
-
+    const filePath = urlParts[1]  // this is the file path we need to delete
+    
     // Delete file
     const { error } = await supabase.storage
         .from('images')

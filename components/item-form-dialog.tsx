@@ -35,7 +35,8 @@ interface ItemFormDialogProps {
     onOpenChange: (open: boolean) => void;
     item?: ClothingItem | null;
     onSave: (
-        item: Omit<ClothingItem, "id" | "created_at" | "state" | "worn_at" | "user_id" | "updated_at">
+        item: Omit<ClothingItem, "id" | "created_at" | "state" | "worn_at" | "user_id" | "updated_at">,
+        imageFile?: File | null
     ) => void;
 }
 
@@ -51,6 +52,7 @@ export function ItemFormDialog({
         image_url: "",
     });
     const [imagePreview, setImagePreview] = React.useState<string | null>(null);
+    const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
     const fileInputRef = React.useRef<HTMLInputElement>(null);
 
     React.useEffect(() => {
@@ -86,11 +88,14 @@ export function ItemFormDialog({
                 return;
             }
 
+            // Store the file for upload later
+            setSelectedFile(file);
+            
+            // Create preview
             const reader = new FileReader();
             reader.onloadend = () => {
-                const base64String = reader.result as string;
-                setFormData({ ...formData, image_url: base64String });
-                setImagePreview(base64String);
+                const previewUrl = reader.result as string;
+                setImagePreview(previewUrl);
             };
             reader.readAsDataURL(file);
         }
@@ -99,6 +104,7 @@ export function ItemFormDialog({
     const handleRemoveImage = () => {
         setFormData({ ...formData, image_url: "" });
         setImagePreview(null);
+        setSelectedFile(null);
         if (fileInputRef.current) {
             fileInputRef.current.value = "";
         }
@@ -112,11 +118,14 @@ export function ItemFormDialog({
                 alert("Image size must be less than 5MB");
                 return;
             }
+            // Store the file for upload later
+            setSelectedFile(file);
+            
+            // Create preview
             const reader = new FileReader();
             reader.onloadend = () => {
-                const base64String = reader.result as string;
-                setFormData({ ...formData, image_url: base64String });
-                setImagePreview(base64String);
+                const previewUrl = reader.result as string;
+                setImagePreview(previewUrl);
             };
             reader.readAsDataURL(file);
         }
@@ -128,11 +137,35 @@ export function ItemFormDialog({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        
+        // Determine image_url value
+        let imageUrl: string | null = null;
+        
+        if (selectedFile) {
+            // New file selected - will be uploaded by parent, so pass null for now
+            imageUrl = null;
+        } else if (item) {
+            // Editing existing item
+            if (imagePreview) {
+                // Image still exists (either existing or was previewed)
+                imageUrl = formData.image_url;
+            } else {
+                // Image was removed
+                imageUrl = null;
+            }
+        } else {
+            // New item, no file selected
+            imageUrl = null;
+        }
+        
         onSave({
             name: formData.name,
             category: formData.category,
-            image_url: formData.image_url || null,
-        });
+            image_url: imageUrl,
+        }, selectedFile);
+        
+        // Reset form state
+        setSelectedFile(null);
         onOpenChange(false);
     };
 
