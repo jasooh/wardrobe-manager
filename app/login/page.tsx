@@ -9,7 +9,7 @@
 
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
-import { LoginForm } from "@/components/login-form";
+import { LoginForm } from "@/components/auth-components/login-form";
 import { Spinner } from "@/components/ui/spinner";
 import { useEffect } from "react";
 

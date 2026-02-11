@@ -16,6 +16,7 @@ import { WardrobeHeader } from "@/components/wardrobe-header";
 import { WardrobeStats } from "@/components/wardrobe-stats";
 import { WardrobeEmptyState } from "@/components/wardrobe-empty-state";
 import { WardrobeItemsGrid } from "@/components/wardrobe-items-grid";
+import { SignoutButton } from "@/components/auth-components/signout-button";
 import { useWardrobe } from "@/context/wardrobe-context";
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
@@ -35,7 +36,7 @@ export default function Page() {
     // Redirect to login page if user is not logged in
     useEffect(() => {
         if (!loading && !user) {
-            router.push('/login');
+            router.push("/login");
         }
     }, [user, loading, router]);
 
@@ -127,6 +128,11 @@ export default function Page() {
     return (
         <main className="min-h-screen bg-background">
             <div className="container mx-auto px-8 py-20 max-w-6xl">
+                {/* Signout button */}
+                <div className="flex justify-end mb-4">
+                    <SignoutButton />
+                </div>
+
                 {/* Header */}
                 <WardrobeHeader onAddItem={handleAddItem} />
 

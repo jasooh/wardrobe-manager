@@ -19,7 +19,11 @@ const sizeClasses = {
     lg: "size-8",
 };
 
-export function Spinner({ className, size = "default", ...props }: SpinnerProps) {
+export function Spinner({
+    className,
+    size = "default",
+    ...props
+}: SpinnerProps) {
     return (
         <div
             className={cn("flex items-center justify-center", className)}

@@ -1,38 +1,26 @@
+/**
+ * login-form.tsx
+ *
+ * Login form component for the wardrobe manager application.
+ * Allows users to login to their account.
+ */
+
 "use client";
 
 import { useState } from "react";
-import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/auth-context";
 
 export function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    const supabase = createClient();
-    const router = useRouter();
+    const { login, error, loading } = useAuth();
 
-
-    const handleLogin = async (e: React.FormEvent) => {
-        e.preventDefault(); // prevent page reload
-        setLoading(true);
-        setError(null);
-
-        const { error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
-
-        if (error) {
-            setError(error.message);
-            setLoading(false);
-        } else {
-            router.push('/');
-        }
-        
+    const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        await login(email, password);
     };
 
     return (
@@ -44,6 +32,7 @@ export function LoginForm() {
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        autoComplete="email"
                         required
                     />
                 </FieldGroup>
@@ -55,11 +44,16 @@ export function LoginForm() {
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        autoComplete="current-password"
                         required
                     />
                 </FieldGroup>
             </Field>
-            {error && <p className="text-sm text-destructive">{error}</p>}
+            {error && (
+                <p className="text-sm text-destructive">
+                    {error} Please try again.
+                </p>
+            )}
             <Button type="submit" disabled={loading}>
                 {loading ? "Logging in..." : "Log in"}
             </Button>
