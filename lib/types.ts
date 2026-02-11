@@ -6,37 +6,37 @@
  */
 
 export type ClothingCategory =
-  | "tops"
-  | "bottoms"
-  | "outerwear"
-  | "shoes"
-  | "accessories"
-  | "underwear"
-  | "other";
+    | "tops"
+    | "bottoms"
+    | "outerwear"
+    | "shoes"
+    | "accessories"
+    | "underwear"
+    | "other";
 
 export type ClothingItemState =
-  | "CLEAN"
-  | "DIRTY"
-  | "CHECKED_OUT"
-  | "UNKNOWN"
-  | "ARCHIVED";
+    | "CLEAN"
+    | "DIRTY"
+    | "CHECKED_OUT"
+    | "UNKNOWN"
+    | "ARCHIVED";
 
 export const categories: ClothingCategory[] = [
-  "tops",
-  "bottoms",
-  "outerwear",
-  "shoes",
-  "accessories",
-  "underwear",
-  "other",
+    "tops",
+    "bottoms",
+    "outerwear",
+    "shoes",
+    "accessories",
+    "underwear",
+    "other",
 ];
 
 export interface ClothingItem {
-  id: string;
-  name: string;
-  category: ClothingCategory;
-  image?: string;
-  state: ClothingItemState;
-  createdAt: string;
-  wornAt?: string;
+    id: string;
+    name: string;
+    category: ClothingCategory;
+    image?: string;
+    state: ClothingItemState;
+    createdAt: string;
+    wornAt?: string;
 }

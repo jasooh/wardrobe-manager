@@ -19,118 +19,122 @@ import { WardrobeItemsGrid } from "@/components/wardrobe-items-grid";
 import { useWardrobe } from "@/context/wardrobe-context";
 
 export default function Page() {
-  const { searchQuery, categoryFilter } = useWardrobe();
-  const [items, setItems] = React.useState<ClothingItem[]>([]);
-  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
-  const [editingItem, setEditingItem] = React.useState<ClothingItem | null>(
-    null
-  );
+    const { searchQuery, categoryFilter } = useWardrobe();
+    const [items, setItems] = React.useState<ClothingItem[]>([]);
+    const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+    const [editingItem, setEditingItem] = React.useState<ClothingItem | null>(
+        null
+    );
 
-  const handleAddItem = () => {
-    setEditingItem(null);
-    setIsDialogOpen(true);
-  };
+    const handleAddItem = () => {
+        setEditingItem(null);
+        setIsDialogOpen(true);
+    };
 
-  const handleEditItem = (item: ClothingItem) => {
-    setEditingItem(item);
-    setIsDialogOpen(true);
-  };
+    const handleEditItem = (item: ClothingItem) => {
+        setEditingItem(item);
+        setIsDialogOpen(true);
+    };
 
-  const handleSaveItem = (
-    itemData: Omit<ClothingItem, "id" | "createdAt" | "state" | "wornAt">
-  ) => {
-    if (editingItem) {
-      // Update existing item
-      setItems((prevItems) =>
-        prevItems.map((item) =>
-          item.id === editingItem.id
-            ? {
-                ...item,
+    const handleSaveItem = (
+        itemData: Omit<ClothingItem, "id" | "createdAt" | "state" | "wornAt">
+    ) => {
+        if (editingItem) {
+            // Update existing item
+            setItems((prevItems) =>
+                prevItems.map((item) =>
+                    item.id === editingItem.id
+                        ? {
+                              ...item,
+                              ...itemData,
+                          }
+                        : item
+                )
+            );
+        } else {
+            // Add new item
+            const newItem: ClothingItem = {
                 ...itemData,
-              }
-            : item
-        )
-      );
-    } else {
-      // Add new item
-      const newItem: ClothingItem = {
-        ...itemData,
-        id: crypto.randomUUID(),
-        state: "UNKNOWN",
-        createdAt: new Date().toISOString(),
-      };
-      setItems((prevItems) => [...prevItems, newItem]);
-    }
-    setIsDialogOpen(false);
-    setEditingItem(null);
-  };
+                id: crypto.randomUUID(),
+                state: "UNKNOWN",
+                createdAt: new Date().toISOString(),
+            };
+            setItems((prevItems) => [...prevItems, newItem]);
+        }
+        setIsDialogOpen(false);
+        setEditingItem(null);
+    };
 
-  const handleStateChange = (id: string, state: ClothingItemState) => {
-    setItems((prevItems) =>
-      prevItems.map((item) => (item.id === id ? { ...item, state } : item))
+    const handleStateChange = (id: string, state: ClothingItemState) => {
+        setItems((prevItems) =>
+            prevItems.map((item) =>
+                item.id === id ? { ...item, state } : item
+            )
+        );
+    };
+
+    const handleMarkWorn = (id: string) => {
+        setItems((prevItems) =>
+            prevItems.map((item) =>
+                item.id === id
+                    ? { ...item, wornAt: new Date().toISOString() }
+                    : item
+            )
+        );
+    };
+
+    const handleDeleteItem = (id: string) => {
+        setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+    };
+
+    // Filter items based on search query and category
+    const filteredItems = items.filter((item) => {
+        const matchesSearch =
+            searchQuery === "" ||
+            item.name.toLowerCase().includes(searchQuery.toLowerCase());
+
+        const matchesCategory =
+            categoryFilter === "all" || item.category === categoryFilter;
+
+        return matchesSearch && matchesCategory;
+    });
+
+    return (
+        <main className="min-h-screen bg-background">
+            <div className="container mx-auto px-8 py-20 max-w-6xl">
+                {/* Header */}
+                <WardrobeHeader onAddItem={handleAddItem} />
+
+                {/* Search bar */}
+                <SearchBar />
+                <WardrobeStats
+                    filteredCount={filteredItems.length}
+                    totalCount={items.length}
+                />
+
+                {/* Clothing items grid */}
+                {filteredItems.length === 0 ? (
+                    <WardrobeEmptyState
+                        hasItems={items.length > 0}
+                        onAddItem={handleAddItem}
+                    />
+                ) : (
+                    <WardrobeItemsGrid
+                        items={filteredItems}
+                        onEdit={handleEditItem}
+                        onDelete={handleDeleteItem}
+                        onStateChange={handleStateChange}
+                        onMarkWorn={handleMarkWorn}
+                    />
+                )}
+            </div>
+
+            <ItemFormDialog
+                open={isDialogOpen}
+                onOpenChange={setIsDialogOpen}
+                item={editingItem}
+                onSave={handleSaveItem}
+            />
+        </main>
     );
-  };
-
-  const handleMarkWorn = (id: string) => {
-    setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, wornAt: new Date().toISOString() } : item
-      )
-    );
-  };
-
-  const handleDeleteItem = (id: string) => {
-    setItems((prevItems) => prevItems.filter((item) => item.id !== id));
-  };
-
-  // Filter items based on search query and category
-  const filteredItems = items.filter((item) => {
-    const matchesSearch =
-      searchQuery === "" ||
-      item.name.toLowerCase().includes(searchQuery.toLowerCase());
-
-    const matchesCategory =
-      categoryFilter === "all" || item.category === categoryFilter;
-
-    return matchesSearch && matchesCategory;
-  });
-
-  return (
-    <main className="min-h-screen bg-background">
-      <div className="container mx-auto px-8 py-20 max-w-6xl">
-        {/* Header */}
-        <WardrobeHeader onAddItem={handleAddItem} />
-
-        {/* Search bar */}
-        <SearchBar />
-        <WardrobeStats
-          filteredCount={filteredItems.length}
-          totalCount={items.length}
-        />
-
-        {/* Clothing items grid */}
-        {filteredItems.length === 0 ? (
-          <WardrobeEmptyState
-            hasItems={items.length > 0}
-            onAddItem={handleAddItem}
-          />
-        ) : (
-          <WardrobeItemsGrid
-            items={filteredItems}
-            onEdit={handleEditItem}
-            onDelete={handleDeleteItem}
-            onStateChange={handleStateChange}
-            onMarkWorn={handleMarkWorn}
-          />
-        )}
-      </div>
-
-      <ItemFormDialog
-        open={isDialogOpen}
-        onOpenChange={setIsDialogOpen}
-        item={editingItem}
-        onSave={handleSaveItem}
-      />
-    </main>
-  );
 }
