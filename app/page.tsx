@@ -22,6 +22,7 @@ import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Spinner } from "@/components/ui/spinner";
+import { getClothingItems } from "@/lib/supabase/queries";
 
 export default function Page() {
     const { searchQuery, categoryFilter } = useWardrobe();
@@ -39,6 +40,14 @@ export default function Page() {
             router.push("/login");
         }
     }, [user, loading, router]);
+
+    useEffect(() => {
+        if (user?.id) {
+            getClothingItems(user.id).then((items) => {
+                setItems(items);
+            });
+        }
+    }, [user?.id]);
 
     if (loading) {
         return (
