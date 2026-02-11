@@ -87,6 +87,8 @@ export function WardrobeItemCard({
                             <CardTitle>{item.name}</CardTitle>
                             <CardDescription className="capitalize">
                                 {item.category}
+                                <br />
+                                <p className="italic text-[10px]">{item.id}</p>
                             </CardDescription>
                         </div>
                         <DropdownMenu>
@@ -162,7 +164,9 @@ export function WardrobeItemCard({
                                 <CalendarIcon className="size-3" />
                                 <span>
                                     Last worn:{" "}
-                                    {new Date(item.worn_at).toLocaleDateString()}
+                                    {new Date(
+                                        item.worn_at
+                                    ).toLocaleDateString()}
                                 </span>
                             </div>
                         )}
@@ -172,7 +176,9 @@ export function WardrobeItemCard({
                     <div className="flex items-center justify-between w-full text-xs text-muted-foreground">
                         <span>
                             Added:{" "}
-                            {new Date(item.created_at || "").toLocaleDateString()}
+                            {new Date(
+                                item.created_at || ""
+                            ).toLocaleDateString()}
                         </span>
                     </div>
                 </CardFooter>

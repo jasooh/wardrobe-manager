@@ -6,16 +6,18 @@ import { ClothingItem } from "@/lib/types";
 /**
  * Get all clothing items for a user
  */
-export async function getClothingItems(userId: string): Promise<ClothingItem[]> {
+export async function getClothingItems(
+    userId: string
+): Promise<ClothingItem[]> {
     const supabase = createClient();
     const { data, error } = await supabase
-        .from('clothing_items')
-        .select('*')
-        .eq('user_id', userId)
-        .order('created_at', { ascending: false });
-        
+        .from("clothing_items")
+        .select("*")
+        .eq("user_id", userId)
+        .order("created_at", { ascending: false });
+
     if (error) {
-        console.error('Error fetching clothing items:', error);
+        console.error("Error fetching clothing items:", error);
         throw error;
     }
 
@@ -25,10 +27,13 @@ export async function getClothingItems(userId: string): Promise<ClothingItem[]> 
 /**
  * Create a new clothing item for a user
  */
-export async function createClothingItem(userId: string, item: ClothingItem): Promise<ClothingItem> {
+export async function createClothingItem(
+    userId: string,
+    item: ClothingItem
+): Promise<ClothingItem> {
     const supabase = createClient();
     const { data, error } = await supabase
-        .from('clothing_items')
+        .from("clothing_items")
         .insert({
             user_id: userId,
             name: item.name,
@@ -43,7 +48,7 @@ export async function createClothingItem(userId: string, item: ClothingItem): Pr
         .single(); // return a single row (single object, not array)
 
     if (error) {
-        console.error('Error creating clothing item:', error);
+        console.error("Error creating clothing item:", error);
         throw error;
     }
 
@@ -54,12 +59,12 @@ export async function createClothingItem(userId: string, item: ClothingItem): Pr
  * Update a clothing item for a user
  */
 export async function updateClothingItem(
-    id: string, 
+    id: string,
     updates: Partial<ClothingItem> // partial because we may only want to update some fields, not all
 ): Promise<ClothingItem> {
     const supabase = createClient();
     const { data, error } = await supabase
-        .from('clothing_items')
+        .from("clothing_items")
         .update({
             name: updates.name,
             category: updates.category,
@@ -68,12 +73,12 @@ export async function updateClothingItem(
             worn_at: updates.worn_at,
             updated_at: new Date().toISOString(),
         })
-        .eq('id', id)
+        .eq("id", id)
         .select()
         .single();
 
     if (error) {
-        console.error('Error updating clothing item:', error);
+        console.error("Error updating clothing item:", error);
         throw error;
     }
 
@@ -84,14 +89,14 @@ export async function updateClothingItem(
  * Delete a clothing item for a user
  */
 export async function deleteClothingItem(id: string): Promise<void> {
-  const supabase = createClient()
-  const { error } = await supabase
-    .from('clothing_items')
-    .delete()
-    .eq('id', id)
+    const supabase = createClient();
+    const { error } = await supabase
+        .from("clothing_items")
+        .delete()
+        .eq("id", id);
 
-  if (error) {
-    console.error('Error deleting item:', error)
-    throw error
-  }
+    if (error) {
+        console.error("Error deleting item:", error);
+        throw error;
+    }
 }

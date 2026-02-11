@@ -22,7 +22,12 @@ import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Spinner } from "@/components/ui/spinner";
-import { getClothingItems, createClothingItem, updateClothingItem, deleteClothingItem } from "@/lib/supabase/queries";
+import {
+    getClothingItems,
+    createClothingItem,
+    updateClothingItem,
+    deleteClothingItem,
+} from "@/lib/supabase/queries";
 import { deleteImage, uploadImage } from "@/lib/supabase/storage";
 
 export default function Page() {
@@ -82,7 +87,10 @@ export default function Page() {
     };
 
     const handleSaveItem = async (
-        itemData: Omit<ClothingItem, "id" | "created_at" | "state" | "worn_at" | "user_id" | "updated_at">,
+        itemData: Omit<
+            ClothingItem,
+            "id" | "created_at" | "state" | "worn_at" | "user_id" | "updated_at"
+        >,
         imageFile?: File | null
     ) => {
         if (!user?.id) return;
@@ -93,21 +101,28 @@ export default function Page() {
                 // Update existing item
                 let finalImageUrl = itemData.image_url;
                 const oldImageUrl = editingItem.image_url;
-                
+
                 // If a new image file was provided, upload it
                 if (imageFile) {
-                    finalImageUrl = await uploadImage(imageFile, user.id, editingItem.id);
-                    
+                    finalImageUrl = await uploadImage(
+                        imageFile,
+                        user.id,
+                        editingItem.id
+                    );
+
                     // Delete old image if it exists
                     if (oldImageUrl) {
                         try {
                             await deleteImage(oldImageUrl);
                         } catch (deleteError) {
-                            console.error("Error deleting old image:", deleteError);
+                            console.error(
+                                "Error deleting old image:",
+                                deleteError
+                            );
                         }
                     }
                 }
-                
+
                 // If image was removed (image_url is null and no new file)
                 if (!imageFile && itemData.image_url === null && oldImageUrl) {
                     try {
@@ -116,7 +131,7 @@ export default function Page() {
                         console.error("Error deleting old image:", deleteError);
                     }
                 }
-                
+
                 const updatedItem = await updateClothingItem(editingItem.id, {
                     ...itemData,
                     image_url: finalImageUrl,
@@ -139,11 +154,18 @@ export default function Page() {
                     image_url: imageFile ? null : itemData.image_url, // Will be updated after upload
                 };
                 const createdItem = await createClothingItem(user.id, newItem);
-                
+
                 // If we have an image file, upload it and update the item
                 if (imageFile) {
-                    const imageUrl = await uploadImage(imageFile, user.id, createdItem.id);
-                    const updatedItem = await updateClothingItem(createdItem.id, { image_url: imageUrl });
+                    const imageUrl = await uploadImage(
+                        imageFile,
+                        user.id,
+                        createdItem.id
+                    );
+                    const updatedItem = await updateClothingItem(
+                        createdItem.id,
+                        { image_url: imageUrl }
+                    );
                     setItems((prevItems) => [updatedItem, ...prevItems]);
                 } else {
                     setItems((prevItems) => [createdItem, ...prevItems]);
@@ -199,10 +221,10 @@ export default function Page() {
         try {
             // Find the item to get its image URL
             const itemToDelete = items.find((item) => item.id === id);
-            
+
             // Delete the item from database
             await deleteClothingItem(id);
-            
+
             // Delete the associated image from storage if it exists
             if (itemToDelete?.image_url) {
                 try {
@@ -212,7 +234,7 @@ export default function Page() {
                     // Continue even if image deletion fails
                 }
             }
-            
+
             // Update local state
             setItems((prevItems) => prevItems.filter((item) => item.id !== id));
         } catch (error) {

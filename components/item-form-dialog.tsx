@@ -35,7 +35,10 @@ interface ItemFormDialogProps {
     onOpenChange: (open: boolean) => void;
     item?: ClothingItem | null;
     onSave: (
-        item: Omit<ClothingItem, "id" | "created_at" | "state" | "worn_at" | "user_id" | "updated_at">,
+        item: Omit<
+            ClothingItem,
+            "id" | "created_at" | "state" | "worn_at" | "user_id" | "updated_at"
+        >,
         imageFile?: File | null
     ) => void;
 }
@@ -90,7 +93,7 @@ export function ItemFormDialog({
 
             // Store the file for upload later
             setSelectedFile(file);
-            
+
             // Create preview
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -120,7 +123,7 @@ export function ItemFormDialog({
             }
             // Store the file for upload later
             setSelectedFile(file);
-            
+
             // Create preview
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -137,10 +140,10 @@ export function ItemFormDialog({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         // Determine image_url value
         let imageUrl: string | null = null;
-        
+
         if (selectedFile) {
             // New file selected - will be uploaded by parent, so pass null for now
             imageUrl = null;
@@ -157,13 +160,16 @@ export function ItemFormDialog({
             // New item, no file selected
             imageUrl = null;
         }
-        
-        onSave({
-            name: formData.name,
-            category: formData.category,
-            image_url: imageUrl,
-        }, selectedFile);
-        
+
+        onSave(
+            {
+                name: formData.name,
+                category: formData.category,
+                image_url: imageUrl,
+            },
+            selectedFile
+        );
+
         // Reset form state
         setSelectedFile(null);
         onOpenChange(false);
