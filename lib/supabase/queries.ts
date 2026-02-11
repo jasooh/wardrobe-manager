@@ -1,3 +1,5 @@
+// Defines CRUD operations for the clothing_items table
+
 import { createClient } from "@/lib/supabase/client";
 import { ClothingItem } from "@/lib/types";
 
